@@ -2,13 +2,24 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { registerUser } from '../utils/auth';
 
 function RegisterForm({ user, updateUser }) {
   const [formData, setFormData] = useState({
+    user_name: '',
+    email: '',
+    profile_image_url: '',
     bio: '',
     uid: user.uid,
   });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,13 +28,52 @@ function RegisterForm({ user, updateUser }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Gamer Bio</Form.Label>
-        <Form.Control as="textarea" name="bio" required placeholder="Enter your Bio" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-        <Form.Text className="text-muted">Let other gamers know a little bit about you...</Form.Text>
+
+      <Form.Group className="mb-3">
+        <Form.Label>User Name</Form.Label>
+        <Form.Control
+          name="user_name"
+          required
+          value={formData.user_name}
+          onChange={handleInputChange}
+        />
       </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          name="email"
+          required
+          value={formData.email}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Profile Image</Form.Label>
+        <Form.Control
+          name="profile_image_url"
+          required
+          value={formData.profile_image_url}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>User Bio</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="bio"
+          required
+          placeholder="Enter your Bio"
+          value={formData.bio}
+          onChange={handleInputChange}
+        />
+        <Form.Text className="text-muted">Tell us a bit about yourself, fellow Wax Dad...</Form.Text>
+      </Form.Group>
+
       <Button variant="primary" type="submit">
-        Submit
+        Register
       </Button>
     </Form>
   );
