@@ -2,19 +2,6 @@ import { clientCredentials } from '../client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const createUser = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/users.json`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then((response) => response.json())
-    .then((data) => resolve((data)))
-    .catch(reject);
-});
-
 const getSingleUser = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/users/${id}`, {
     method: 'GET',
@@ -27,26 +14,24 @@ const getSingleUser = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getUser = (uid) =>
-  new Promise((resolve, reject) => {
-    // Make a GET request to the Firebase Realtime Database to retrieve user data that matches the `uid` value
-    fetch(`${endpoint}/users.json?orderBy="uid"&equalTo="${uid}"`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+const getUserByUid = (uid) => new Promise((resolve, reject) => {
+  // Make a GET request to the Firebase Realtime Database to retrieve user data that matches the `uid` value
+  fetch(`${endpoint}/users.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  // Parse the response body as JSON
+    .then((response) => response.json())
+  // If data is found for the given `uid`, resolve the Promise with the first user object found in the data, otherwise resolve with null
+    .then((data) => {
+      const userArray = Object.values(data);
+      const user = userArray.length ? userArray[0] : null;
+      resolve(user);
     })
-      // Parse the response body as JSON
-      .then((response) => response.json())
-      // If data is found for the given `uid`, resolve the Promise with the first user object found in the data, otherwise resolve with null
-      .then((data) => {
-        const userArray = Object.values(data);
-        const user = userArray.length ? userArray[0] : null;
-        resolve(user);
-      })
-      .catch(reject);
-  });
-
+    .catch(reject);
+});
 
 const getUsers = () => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/users`, {
@@ -112,8 +97,7 @@ const viewUserDetails = (id) => new Promise((resolve, reject) => {
 export {
   getUsers,
   getSingleUser,
-  getUser,
-  createUser,
+  getUserByUid,
   updateUser,
   viewUserDetails,
 };

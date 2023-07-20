@@ -1,16 +1,18 @@
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { registerUser } from '../utils/auth';
+import { updateUser } from '../utils/data/userData';
 
-function RegisterForm({ user, updateUser }) {
+function RegisterForm({ user }) {
   const [formData, setFormData] = useState({
-    user_name: '',
-    email: '',
-    profile_image_url: '',
-    bio: '',
-    uid: user.uid,
+    user_name: user.user_name || '',
+    email: user.email || '',
+    profile_image_url: user.profile_image_url || '',
+    bio: user.bio || '',
+    uid: user.uid || '',
   });
 
   const handleInputChange = (e) => {
@@ -81,9 +83,12 @@ function RegisterForm({ user, updateUser }) {
 
 RegisterForm.propTypes = {
   user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-  }).isRequired,
-  updateUser: PropTypes.func.isRequired,
+    uid: PropTypes.string,
+    user_name: PropTypes.string,
+    email: PropTypes.string,
+    profile_image_url: PropTypes.string,
+    bio: PropTypes.string,
+  }),
 };
 
 export default RegisterForm;
