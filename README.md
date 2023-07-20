@@ -1,4 +1,4 @@
-# React/Next.js Django Auth Template
+# Midlife Vinyl Crisis
 
 ## Topics
 - [Get Started](#getting-started)
