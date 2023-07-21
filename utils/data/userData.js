@@ -1,7 +1,5 @@
 import { clientCredentials } from '../client';
 
-const endpoint = clientCredentials.databaseURL;
-
 const getSingleUser = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/users/${id}`, {
     method: 'GET',
@@ -9,6 +7,7 @@ const getSingleUser = (id) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
+    .then(console.warn('getSingle', id))
     .then((response) => response.json())
     .then((data) => resolve((data)))
     .catch(reject);
@@ -16,7 +15,7 @@ const getSingleUser = (id) => new Promise((resolve, reject) => {
 
 const getUserByUid = (uid) => new Promise((resolve, reject) => {
   // Make a GET request to the Firebase Realtime Database to retrieve user data that matches the `uid` value
-  fetch(`${endpoint}/users.json?orderBy="uid"&equalTo="${uid}"`, {
+  fetch(`${clientCredentials.databaseURL}/users.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -52,14 +51,14 @@ const getUsers = () => new Promise((resolve, reject) => {
 });
 
 const updateUser = (payload) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/users/${payload.id}.json`, {
+  fetch(`${clientCredentials.databaseURL}/users/${payload.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   })
-    .then((response) => response.json())
+    .then(console.warn('update user', payload.id))
     .then((data) => resolve((data)))
     .catch(reject);
 });

@@ -11,8 +11,9 @@ export default function EditUser() {
   const [editUser, setEditUser] = useState({});
   const { user } = useAuth();
   useEffect(() => {
-    getSingleUser(user.uid).then((obj) => {
-      setEditUser(obj);
+    getSingleUser(user.id).then((profUser) => {
+      console.warn('edit user', user.id);
+      setEditUser(profUser);
     });
   }, [id]);
   return (
@@ -21,7 +22,7 @@ export default function EditUser() {
         <title>Edit User</title>
       </Head>
       <div>
-        <RegisterForm obj={editUser} />
+        <RegisterForm user={editUser} />
       </div>
     </>
   );
