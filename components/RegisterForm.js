@@ -1,19 +1,38 @@
 /* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useRouter } from 'next/router';
 import { registerUser } from '../utils/auth';
 import { updateUser } from '../utils/data/userData';
 
 function RegisterForm({ user }) {
+  const router = useRouter();
+  // Set default values for the formData state based on the user prop
   const [formData, setFormData] = useState({
-    user_name: user.user_name || '',
-    email: user.email || '',
-    profile_image_url: user.profile_image_url || '',
-    bio: user.bio || '',
-    uid: user.uid || '',
+    user_name: '',
+    email: '',
+    profile_image_url: '',
+    bio: '',
+    uid: '',
   });
+
+  // Update the formData state when the user prop changes
+  useEffect(() => {
+    if (user) {
+      console.warn('useEffect', user.id);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        id: user.id,
+        user_name: user.user_name || '',
+        email: user.email || '',
+        profile_image_url: user.profile_image_url || '',
+        bio: user.bio || '',
+        uid: user.uid || '',
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +44,17 @@ function RegisterForm({ user }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(formData).then(() => updateUser(user.uid));
+
+    // Check if there is an existing user object
+    if (user.id) {
+      updateUser(formData)
+        .then(() => router.push('/profile'));
+      console.warn(user);
+    } else {
+      registerUser(formData)
+        .then(() => router.push('/'));
+      console.warn(user);
+    }
   };
 
   return (
@@ -75,7 +104,7 @@ function RegisterForm({ user }) {
       </Form.Group>
 
       <Button variant="primary" type="submit">
-        Register
+        Submit
       </Button>
     </Form>
   );
@@ -83,6 +112,7 @@ function RegisterForm({ user }) {
 
 RegisterForm.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.number,
     uid: PropTypes.string,
     user_name: PropTypes.string,
     email: PropTypes.string,
