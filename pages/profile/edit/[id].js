@@ -15,7 +15,7 @@ export default function EditUser() {
       console.warn('edit user', user.id);
       setEditUser(profUser);
     });
-  }, [id]);
+  }, [id, user.id]);
   return (
     <>
       <Head>
