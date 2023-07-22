@@ -7,23 +7,19 @@ const getSingleUser = (id) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
-    .then(console.warn('getSingle', id))
     .then((response) => response.json())
     .then((data) => resolve((data)))
     .catch(reject);
 });
 
 const getUserByUid = (uid) => new Promise((resolve, reject) => {
-  // Make a GET request to the Firebase Realtime Database to retrieve user data that matches the `uid` value
   fetch(`${clientCredentials.databaseURL}/users.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
-  // Parse the response body as JSON
     .then((response) => response.json())
-  // If data is found for the given `uid`, resolve the Promise with the first user object found in the data, otherwise resolve with null
     .then((data) => {
       const userArray = Object.values(data);
       const user = userArray.length ? userArray[0] : null;
@@ -50,7 +46,7 @@ const getUsers = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateUser = (payload) => new Promise((resolve, reject) => {
+const updateUserProfile = (payload) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/users/${payload.id}`, {
     method: 'PUT',
     headers: {
@@ -58,7 +54,6 @@ const updateUser = (payload) => new Promise((resolve, reject) => {
     },
     body: JSON.stringify(payload),
   })
-    .then(console.warn('update user', payload.id))
     .then((data) => resolve((data)))
     .catch(reject);
 });
@@ -97,6 +92,6 @@ export {
   getUsers,
   getSingleUser,
   getUserByUid,
-  updateUser,
+  updateUserProfile,
   viewUserDetails,
 };

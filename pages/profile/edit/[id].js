@@ -9,10 +9,9 @@ export default function EditUser() {
   const router = useRouter();
   const { id } = router.query;
   const [editUser, setEditUser] = useState({});
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   useEffect(() => {
     getSingleUser(user.id).then((profUser) => {
-      console.warn('edit user', user.id);
       setEditUser(profUser);
     });
   }, [id, user.id]);
@@ -22,7 +21,7 @@ export default function EditUser() {
         <title>Edit User</title>
       </Head>
       <div>
-        <RegisterForm user={editUser} />
+        <RegisterForm user={editUser} updateUser={updateUser} />
       </div>
     </>
   );
