@@ -5,11 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRouter } from 'next/router';
 import { registerUser } from '../utils/auth';
-import { updateUser } from '../utils/data/userData';
+import { updateUserProfile } from '../utils/data/userData';
 
-function RegisterForm({ user }) {
+function RegisterForm({ user, updateUser }) {
   const router = useRouter();
-  // Set default values for the formData state based on the user prop
   const [formData, setFormData] = useState({
     user_name: '',
     email: '',
@@ -18,10 +17,8 @@ function RegisterForm({ user }) {
     uid: '',
   });
 
-  // Update the formData state when the user prop changes
   useEffect(() => {
     if (user) {
-      console.warn('useEffect', user.id);
       setFormData((prevFormData) => ({
         ...prevFormData,
         id: user.id,
@@ -45,15 +42,13 @@ function RegisterForm({ user }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if there is an existing user object
     if (user.id) {
-      updateUser(formData)
+      updateUserProfile(formData)
+        .then(() => updateUser(user.uid))
         .then(() => router.push('/profile'));
-      console.warn(user);
     } else {
       registerUser(formData)
         .then(() => router.push('/'));
-      console.warn(user);
     }
   };
 
@@ -119,6 +114,7 @@ RegisterForm.propTypes = {
     profile_image_url: PropTypes.string,
     bio: PropTypes.string,
   }),
+  updateUser: PropTypes.func,
 };
 
 export default RegisterForm;

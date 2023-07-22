@@ -11,7 +11,7 @@ import { signOut } from '../utils/auth';
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="bg-dark-purple" variant="dark">
       <Container>
         <Link passHref href="/">
           <Navbar.Brand>MVC</Navbar.Brand>
@@ -35,7 +35,6 @@ export default function NavBar() {
             <Link passHref href="/profile">
               <Nav.Link>Profile</Nav.Link>
             </Link>
-            &spc;
             <Button variant="danger" onClick={signOut}>
               Sign Out
             </Button>
