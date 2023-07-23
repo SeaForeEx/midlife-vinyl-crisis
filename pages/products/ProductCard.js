@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../utils/context/authContext';
+import { deleteProduct } from '../../utils/data/productData';
 
 const ProductCard = ({
   id,
@@ -13,7 +15,15 @@ const ProductCard = ({
   price,
   addedOn,
 }) => {
+  const deleteThisProduct = () => {
+    if (window.confirm('Delete Product?')) {
+      deleteProduct(id).then(() => {
+        ('Product Deleted');
+      });
+    }
+  };
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <Card className="text-center">
@@ -30,16 +40,37 @@ const ProductCard = ({
         </Card.Text>
       </Card.Body>
       <div className="d-flex">
-        <Button
-          onClick={() => {
-            router.push('/cart');
-          }}
-          style={{
-            margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
-          }}
-        >
-          Add To Cart
-        </Button>
+        {user.id === sellerId
+          ? (
+            <>
+              <Button
+                style={{ margin: '10px', backgroundColor: '#003049' }}
+                onClick={() => {
+                  router.push(`/products/edit/${id}`);
+                }}
+              >
+                Edit Product
+              </Button>
+              <Button
+                style={{ margin: '10px', backgroundColor: '#003049' }}
+                onClick={deleteThisProduct}
+              >
+                Delete Product
+              </Button>
+            </>
+          )
+          : (
+            <Button
+              onClick={() => {
+                router.push('/cart');
+              }}
+              style={{
+                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+              }}
+            >
+              Add To Cart
+            </Button>
+          )}
       </div>
 
     </Card>
