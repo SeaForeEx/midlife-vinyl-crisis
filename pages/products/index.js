@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RecordCard from './RecordCard';
+import ProductCard from './ProductCard';
 import { getAllProducts } from '../../utils/data/productData';
 
 function Records() {
@@ -30,7 +30,7 @@ function Records() {
             style={{ margin: '40px' }}
             id="record-section"
           >
-            <RecordCard
+            <ProductCard
               id={record.id}
               sellerId={record.seller_id}
               genreId={record.genre_id}

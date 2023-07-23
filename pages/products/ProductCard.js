@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
-const RecordCard = ({
+const ProductCard = ({
   id,
   sellerId,
   genreId,
@@ -46,10 +46,10 @@ const RecordCard = ({
   );
 };
 
-RecordCard.propTypes = {
+ProductCard.propTypes = {
   id: PropTypes.number.isRequired,
-  sellerId: PropTypes.string.isRequired,
-  genreId: PropTypes.string.isRequired,
+  sellerId: PropTypes.number.isRequired,
+  genreId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   qtyAvailable: PropTypes.number.isRequired,
@@ -57,4 +57,4 @@ RecordCard.propTypes = {
   addedOn: PropTypes.string.isRequired,
 };
 
-export default RecordCard;
+export default ProductCard;

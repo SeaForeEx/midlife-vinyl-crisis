@@ -23,6 +23,13 @@ const Profile = () => {
       >
         Edit User
       </Button>
+      <Button
+        onClick={() => {
+          router.push('/products/new');
+        }}
+      >
+        Add a Record
+      </Button>
       <h2>
         <u>Inventory</u>
       </h2>
