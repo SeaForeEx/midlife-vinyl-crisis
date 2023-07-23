@@ -43,15 +43,33 @@ const getSingleProduct = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getProductsBySellerId = (sellerId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products?sellerId=${sellerId}`, {
+const getProductsByUid = (uid) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then(resolve)
+    .then((data) => {
+      const usersProducts = Object.values(data).filter((item) => item.seller_user_id === uid);
+      resolve(usersProducts);
+    })
+    .catch(reject);
+});
+
+const getProductsBySellerId = (sellerId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const usersProducts = Object.values(data).filter((item) => item.seller_id === sellerId);
+      resolve(usersProducts);
+    })
     .catch(reject);
 });
 
@@ -91,5 +109,5 @@ const deleteProduct = (product) => new Promise((resolve, reject) => {
 });
 
 export {
-  createProduct, getAllProducts, getSingleProduct, getProductsBySellerId, getProductsByGenreId, updateProduct, deleteProduct,
+  createProduct, getAllProducts, getSingleProduct, getProductsByUid, getProductsBySellerId, getProductsByGenreId, updateProduct, deleteProduct,
 };
