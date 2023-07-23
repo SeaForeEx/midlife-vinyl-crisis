@@ -39,6 +39,7 @@ function Records() {
               qtyAvailable={record.qty_available}
               price={record.price}
               addedOn={record.added_on}
+              onUpdate={displayRecords}
             />
           </section>
         ))}

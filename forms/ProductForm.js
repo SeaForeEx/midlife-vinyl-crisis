@@ -36,6 +36,7 @@ const ProductForm = ({ obj }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setCurrentRecord((prevState) => ({
       ...prevState,
       [name]: value,
@@ -48,7 +49,7 @@ const ProductForm = ({ obj }) => {
     if (obj.id) {
       const recordUpdate = {
         id: currentRecord.id,
-        sellerId: currentRecord.seller_id,
+        sellerId: user.id,
         genreId: currentRecord.genre_id,
         title: currentRecord.title,
         description: currentRecord.description,
@@ -58,10 +59,20 @@ const ProductForm = ({ obj }) => {
       };
 
       updateProduct(recordUpdate)
-        .then(() => router.push(`/records/${currentRecord.id}`));
+        .then(() => router.push(`/products/${currentRecord.id}`));
     } else {
-      createProduct(currentRecord)
-        .then((record) => router.push(`/records/${record.id}`));
+      const record = {
+        id: currentRecord.id,
+        sellerId: user.id,
+        genreId: currentRecord.genreId,
+        title: currentRecord.title,
+        description: currentRecord.description,
+        qtyAvailable: currentRecord.qtyAvailable,
+        price: currentRecord.price,
+        addedOn: currentRecord.addedOn,
+      };
+      createProduct(record)
+        .then(() => router.push(`/products/${record.id}`));
     }
   };
 
@@ -103,12 +114,12 @@ const ProductForm = ({ obj }) => {
 
         <Form.Group className="mb-3">
           <Form.Label>Qty Available</Form.Label>
-          <Form.Control name="qty-available" required value={currentRecord.qtyAvailable} onChange={handleChange} />
+          <Form.Control type="number" step="1" name="qtyAvailable" required value={currentRecord.qtyAvailable} onChange={handleChange} />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>Price</Form.Label>
-          <Form.Control name="price" required value={currentRecord.price} onChange={handleChange} />
+          <Form.Control type="number" step="1" name="price" required value={currentRecord.price} onChange={handleChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit">
