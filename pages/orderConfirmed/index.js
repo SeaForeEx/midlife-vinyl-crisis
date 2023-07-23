@@ -2,20 +2,21 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
-const Cart = () => {
+const OrderConfirmed = () => {
   const router = useRouter();
   return (
     <>
-      <div>Shopping Cart</div>
+      <div>Order Confirmed</div>
+      <p>Thank You for Shopping With Midlife Vinyl Crisis!</p>
       <Button
         onClick={() => {
-          router.push('/confirmOrder');
+          router.push('/');
         }}
       >
-        Checkout
+        Continue Shopping
       </Button>
     </>
   );
 };
 
-export default Cart;
+export default OrderConfirmed;

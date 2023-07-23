@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { getSingleUser } from '../../../utils/data/userData';
-import RegisterForm from '../../../components/RegisterForm';
+import RegisterForm from '../../../forms/RegisterForm';
 import { useAuth } from '../../../utils/context/authContext';
 
 export default function EditUser() {
