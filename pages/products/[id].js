@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { getSingleProduct, deleteProduct } from '../../utils/data/productData';
+import { Button } from 'react-bootstrap';
+import { getSingleProduct } from '../../utils/data/productData';
 import { useAuth } from '../../utils/context/authContext';
 
 const ViewProduct = () => {
   const router = useRouter();
+  const { user } = useAuth();
   const [productDetails, setProductDetails] = useState({});
   const { id } = router.query;
-  const { user } = useAuth();
-  const deleteThisProduct = () => {
-    if (window.confirm('Delete Product?')) {
-      deleteProduct(id).then(() => {
-        ('Product Deleted');
-      });
-    }
-  };
 
   useEffect(() => {
     getSingleProduct(id).then((productData) => {
@@ -38,39 +31,20 @@ const ViewProduct = () => {
           <p>Added On: {productDetails.added_on}</p>
         </div>
       </div>
-      <div className="d-flex">
-        {user.id === productDetails.seller_id
-          ? (
-            <>
-              <Button
-                style={{ margin: '10px', backgroundColor: '#003049' }}
-                onClick={() => {
-                  router.push(`/products/edit/${id}`);
-                }}
-              >
-                Edit Product
-              </Button>
-              <Button
-                style={{ margin: '10px', backgroundColor: '#003049' }}
-                onClick={deleteThisProduct}
-              >
-                Delete Product
-              </Button>
-            </>
-          )
-          : (
-            <Button
-              onClick={() => {
-                router.push('/cart');
-              }}
-              style={{
-                margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
-              }}
-            >
-              Add To Cart
-            </Button>
-          )}
-      </div>
+      {user.id === productDetails.seller_id
+        ? ('')
+        : (
+          <Button
+            onClick={() => {
+              router.push('/cart');
+            }}
+            style={{
+              margin: '10px', backgroundColor: '#6699CC', fontSize: '10px', width: '90px',
+            }}
+          >
+            Add To Cart
+          </Button>
+        )}
     </>
   );
 };

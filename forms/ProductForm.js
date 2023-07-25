@@ -59,29 +59,31 @@ const ProductForm = ({ obj }) => {
       const recordUpdate = {
         id: currentRecord.id,
         sellerId: user.id,
-        genreId: currentRecord.genre_id,
+        genreId: currentRecord.genreId,
         title: currentRecord.title,
         description: currentRecord.description,
-        qtyAvailable: currentRecord.qty_available,
+        qtyAvailable: currentRecord.qtyAvailable,
         price: currentRecord.price,
-        addedOn: currentRecord.added_on,
+        addedOn: currentRecord.addedOn,
       };
 
       updateProduct(recordUpdate)
         .then(() => router.push(`/products/${currentRecord.id}`));
     } else {
-      const record = {
-        id: currentRecord.id,
-        sellerId: user.id,
-        genreId: currentRecord.genre_id,
-        title: currentRecord.title,
-        description: currentRecord.description,
-        qtyAvailable: currentRecord.qty_available,
-        price: currentRecord.price,
-        addedOn: currentRecord.added_on,
-      };
-      createProduct(record)
-        .then(() => router.push(`/products/${record.id}`));
+      // const record = {
+      //   id: currentRecord.id,
+      //   sellerId: user.id,
+      //   genreId: currentRecord.genre_id,
+      //   title: currentRecord.title,
+      //   description: currentRecord.description,
+      //   qtyAvailable: currentRecord.qty_available,
+      //   price: currentRecord.price,
+      //   addedOn: currentRecord.added_on,
+      // };
+      // createProduct(record)
+      //   .then(() => router.push(`/products/${record.id}`));
+      createProduct(currentRecord)
+        .then((product) => router.push(`/products/${product.id}`));
     }
   };
 
