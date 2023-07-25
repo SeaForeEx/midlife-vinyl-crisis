@@ -59,12 +59,12 @@ const ProductForm = ({ obj }) => {
       const recordUpdate = {
         id: currentRecord.id,
         sellerId: user.id,
-        genreId: currentRecord.genreId,
+        genreId: currentRecord.genre_id,
         title: currentRecord.title,
         description: currentRecord.description,
-        qtyAvailable: currentRecord.qtyAvailable,
+        qtyAvailable: currentRecord.qty_available,
         price: currentRecord.price,
-        addedOn: currentRecord.addedOn,
+        addedOn: currentRecord.added_on,
       };
 
       updateProduct(recordUpdate)
@@ -73,12 +73,12 @@ const ProductForm = ({ obj }) => {
       const record = {
         id: currentRecord.id,
         sellerId: user.id,
-        genreId: currentRecord.genreId,
+        genreId: currentRecord.genre_id,
         title: currentRecord.title,
         description: currentRecord.description,
-        qtyAvailable: currentRecord.qtyAvailable,
+        qtyAvailable: currentRecord.qty_available,
         price: currentRecord.price,
-        addedOn: currentRecord.addedOn,
+        addedOn: currentRecord.added_on,
       };
       createProduct(record)
         .then(() => router.push(`/products/${record.id}`));
