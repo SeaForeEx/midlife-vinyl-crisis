@@ -27,15 +27,14 @@ function Sellers() {
           <section
             key={`user--${user.id}`}
             className="user"
-            style={{ margin: '40px' }}
-            id="user-section"
           >
             <SellerCard
               id={user.id}
-              userName={user.first_name}
+              userName={user.user_name}
               profileImageUrl={user.profile_image_url}
               createdOn={user.created_on}
               email={user.email}
+              bio={user.bio}
               uid={user.uid}
             />
           </section>

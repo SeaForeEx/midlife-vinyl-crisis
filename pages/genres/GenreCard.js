@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
+import Link from 'next/link';
 // import { Button } from 'react-bootstrap';
 
 const GenreCard = ({
@@ -7,12 +9,10 @@ const GenreCard = ({
   description,
 }) => (
   <Card className="text-center">
-    <Card.Header>{description}</Card.Header>
     <Card.Body>
-      <Card.Title style={{ fontSize: '14px' }}>Genre Id: {id}</Card.Title>
-      <Card.Text style={{ fontSize: '12px' }}>
-        List of Inventory in This Genre
-      </Card.Text>
+      <Link href={`/genres/${id}`}>
+        <a style={{ fontSize: '14px' }}>{description}</a>
+      </Link>
     </Card.Body>
   </Card>
 );
