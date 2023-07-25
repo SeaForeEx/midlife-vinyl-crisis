@@ -45,8 +45,8 @@ SellerCard.propTypes = {
   id: PropTypes.number.isRequired,
   userName: PropTypes.string.isRequired,
   profileImageUrl: PropTypes.string.isRequired,
-  bio: PropTypes.number.isRequired,
-  email: PropTypes.number.isRequired,
+  bio: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default SellerCard;

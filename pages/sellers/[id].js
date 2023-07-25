@@ -1,5 +1,55 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import ProductCard from '../products/ProductCard';
+import { getProductsBySellerId } from '../../utils/data/productData';
 
-export default function ViewInventory() {
-  return <div>Inventory</div>;
+function Records() {
+  const [records, setRecords] = useState([]);
+  const router = useRouter();
+  const { id } = router.query;
+
+  const displayRecords = () => {
+    getProductsBySellerId(id)
+      .then((data) => {
+        setRecords(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching records:', error);
+      });
+  };
+  useEffect(() => {
+    displayRecords();
+  }, []);
+
+  return (
+    <article className="text-center my-4" id="users">
+      <h1 style={{ marginTop: '40px' }}>Records</h1>
+
+      <div>
+        {records.map((record) => (
+          <section
+            key={`record--${record.id}`}
+            className="record"
+            style={{ margin: '40px' }}
+            id="record-section"
+          >
+            <ProductCard
+              id={record.id}
+              sellerId={record.seller_id}
+              genreId={record.genre_id}
+              title={record.title}
+              description={record.description}
+              qtyAvailable={record.qty_available}
+              price={record.price}
+              addedOn={record.added_on}
+              onUpdate={displayRecords}
+            />
+          </section>
+        ))}
+      </div>
+    </article>
+  );
 }
+
+export default Records;

@@ -22,12 +22,11 @@ function Genres() {
     <article className="text-center my-4" id="users">
       <h1 style={{ marginTop: '40px' }}>Genres</h1>
 
-      <div className="text-center my-4 d-flex">
+      <div className="text-center">
         {genres.map((genre) => (
           <section
             key={`genre--${genre.id}`}
             className="genre"
-            style={{ margin: '40px' }}
             id="record-section"
           >
             <GenreCard

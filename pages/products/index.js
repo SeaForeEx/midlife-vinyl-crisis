@@ -22,7 +22,7 @@ function Records() {
     <article className="text-center my-4" id="users">
       <h1 style={{ marginTop: '40px' }}>Records</h1>
 
-      <div className="text-center my-4 d-flex">
+      <div>
         {records.map((record) => (
           <section
             key={`record--${record.id}`}

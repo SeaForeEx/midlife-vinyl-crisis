@@ -13,7 +13,7 @@ const Profile = () => {
   const [sellerProducts, setSellerProducts] = useState([]);
 
   const displayProducts = () => {
-    getProductsBySellerId(user.uid).then((data) => setSellerProducts(data));
+    getProductsBySellerId(user.id).then((data) => setSellerProducts(data));
   };
 
   useEffect(() => {
@@ -58,7 +58,6 @@ const Profile = () => {
             price={product.price}
             addedOn={product.added_on}
             onUpdate={displayProducts}
-            sellerUserId={product.seller_user_id}
           />
         </section>
       ))}

@@ -6,6 +6,15 @@ import { createProduct, updateProduct } from '../utils/data/productData';
 import { useAuth } from '../utils/context/authContext';
 import getAllGenres from '../utils/data/genreData';
 
+const initialState = {
+  title: '',
+  sellerId: 0,
+  genreId: 0,
+  description: '',
+  qtyAvailable: 0,
+  price: 0,
+};
+
 const ProductForm = ({ obj }) => {
   const { user } = useAuth();
 
@@ -19,7 +28,7 @@ const ProductForm = ({ obj }) => {
     if (obj.id) {
       setCurrentRecord({
         id: obj.id,
-        sellerId: obj.seller_id,
+        sellerId: user.id,
         genreId: obj.genre_id,
         title: obj.title,
         description: obj.description,
@@ -50,12 +59,12 @@ const ProductForm = ({ obj }) => {
       const recordUpdate = {
         id: currentRecord.id,
         sellerId: user.id,
-        genreId: currentRecord.genre_id,
+        genreId: currentRecord.genreId,
         title: currentRecord.title,
         description: currentRecord.description,
-        qtyAvailable: currentRecord.qty_available,
+        qtyAvailable: currentRecord.qtyAvailable,
         price: currentRecord.price,
-        addedOn: currentRecord.added_on,
+        addedOn: currentRecord.addedOn,
       };
 
       updateProduct(recordUpdate)
@@ -139,12 +148,12 @@ ProductForm.propTypes = {
     description: PropTypes.string,
     qty_available: PropTypes.number,
     price: PropTypes.number,
-    added_on: PropTypes.number,
+    added_on: PropTypes.string,
   }),
 };
 
 ProductForm.defaultProps = {
-  obj: {},
+  obj: initialState,
 };
 
 export default ProductForm;
