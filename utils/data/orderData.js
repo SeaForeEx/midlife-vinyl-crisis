@@ -1,18 +1,15 @@
 import { clientCredentials } from '../client';
 
-const getOrderByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/orders`, {
+const getOrderByCustomerId = (customerId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders?customerId=${customerId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => {
-      const shoppingCart = Object.values(data).filter((item) => item.user.uid === uid);
-      resolve(shoppingCart);
-    })
+    .then(resolve)
     .catch(reject);
 });
 
-export default getOrderByUid;
+export default getOrderByCustomerId;

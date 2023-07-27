@@ -13,18 +13,27 @@ const createOrderProduct = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getOrderProductsByUid = (uid) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/order_products`, {
+const getSingleOrderProduct = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/order_products/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => {
-      const usersPosts = Object.values(data).filter((item) => item.user.uid === uid);
-      resolve(usersPosts);
-    })
+    .then((data) => resolve((data)))
+    .catch(reject);
+});
+
+const getOrderProductsByOrderId = (orderId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/order_products?orderId=${orderId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then(resolve)
     .catch(reject);
 });
 
@@ -52,5 +61,5 @@ const deleteOrderProduct = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  createOrderProduct, getOrderProductsByUid, updateOrderProduct, deleteOrderProduct,
+  createOrderProduct, getSingleOrderProduct, getOrderProductsByOrderId, updateOrderProduct, deleteOrderProduct,
 };
